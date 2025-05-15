@@ -18,7 +18,7 @@ public:
     void mostrarUsuarios();
 
 private:
-    string archivoUsuarios = "usuarios.txt";
+    string archivoUsuarios = "usuarios.bin";
 };
 
 #endif // SISTEMA_H

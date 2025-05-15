@@ -82,7 +82,7 @@ void Empleados::registroEmpleados()
     cout << "Sueldo: Q";
     cin >> sueldo;
     //Creacion de archivo
-    file.open("Empleados.txt", ios::app | ios::out);
+    file.open("Empleados.bin", ios::app | ios::out);
     //Limitador nuevo y eficiente (Gracias a DeepSeek, Revisa que el archivo exista o este abierto
     if (!file.is_open())
     {
@@ -106,7 +106,7 @@ void Empleados::listaEmpleados()
 
     cout << "\n==================== LISTA DE EMPLEADOS ====================" << endl;
     //Abre el archivo previamente creado y revisa su existencia
-    file.open("Empleados.txt", ios::in);
+    file.open("Empleados.bin", ios::in);
     if (!file.is_open())
     {
         cout << "\nNo hay empleados registrados o el archivo no existe.\n";
@@ -144,7 +144,8 @@ void Empleados::listaEmpleados()
 
     file.close();
 }
-void Empleados::cambioEmpleados() {
+void Empleados::cambioEmpleados()
+{
     // Limpiar pantalla
     system("cls");
     fstream file;
@@ -160,19 +161,24 @@ void Empleados::cambioEmpleados() {
     getline(cin, NombreCambio);
 
     // Abrir archivo original para lectura
-    file.open("Empleados.txt", ios::in);
+    file.open("Empleados.bin", ios::in);
     if (!file.is_open()) {
         cout << "\n\t\t\tNo hay información o no se pudo abrir el archivo..." << endl;
         return;
     }
-
+    //Validacion del nombre
     string linea;
-    while (getline(file, linea)) {
+    while (getline(file, linea))
+        {
+        //Separar datos con el separador
         size_t pos1 = linea.find("|");
         size_t pos2 = linea.find("|", pos1 + 1);
-        if (pos1 != string::npos && pos2 != string::npos) {
+        //
+        if (pos1 != string::npos && pos2 != string::npos)
+         {
             string nombreTemp = linea.substr(pos1 + 1, pos2 - pos1 - 1);
-            if (nombreTemp == NombreCambio) {
+            if (nombreTemp == NombreCambio)
+            {
                 found++;
                 break;
             }
@@ -180,10 +186,11 @@ void Empleados::cambioEmpleados() {
     }
     file.close();
 
-    if (found == 0) {
+    if (found == 0)
+        {
         cout << "\n\t\t\tUsuario no encontrado..." << endl;
         return;
-    }
+        }
 
     // Solicitar los nuevos datos
     cout << "\n Ingrese el nuevo tipo de empleado (contrato/sueldo): ";
@@ -193,34 +200,40 @@ void Empleados::cambioEmpleados() {
 
     // Crear archivo temporal para escribir los datos actualizados
     fstream file1;
-    file.open("Empleados.txt", ios::in);
-    file1.open("Record.txt", ios::out);
-    if (!file1.is_open()) {
+    file.open("Empleados.bin", ios::in);
+    file1.open("Record.bin", ios::out);
+    if (!file1.is_open())
+        {
         cout << "\n\t\t\tError al crear archivo temporal." << endl;
         file.close();
         return;
-    }
+        }
 
-    while (getline(file, linea)) {
+    while (getline(file, linea))
+     {
         size_t pos1 = linea.find("|");
         size_t pos2 = linea.find("|", pos1 + 1);
-        if (pos1 != string::npos && pos2 != string::npos) {
+        if (pos1 != string::npos && pos2 != string::npos)
+         {
             string tipoTemp = linea.substr(0, pos1);
             string nombreTemp = linea.substr(pos1 + 1, pos2 - pos1 - 1);
             float sueldoTemp = stof(linea.substr(pos2 + 1));
-            if (nombreTemp == NombreCambio) {
+            if (nombreTemp == NombreCambio)
+             {
                 file1 << tipoEmpleadoCambio << "|" << NombreCambio << "|" << sueldoCambio << "\n";
                 cout << "\n\t\t\tEmpleado actualizado con exito." << endl;
-            } else {
+             }
+            else
+                {
                 file1 << tipoTemp << "|" << nombreTemp << "|" << sueldoTemp << "\n";
-            }
-        }
+                }
+         }
     }
     file.close();
     file1.close();
 
-    remove("Empleados.txt");
-    rename("Record.txt", "Empleados.txt");
+    remove("Empleados.bin");
+    rename("Record.bin", "Empleados.bin");
 }
 
 
@@ -236,7 +249,7 @@ void Empleados::borrarEmpleados()
     cout << "\n-------------------------Detalles Persona a Borrar-------------------------" << endl;
 
     // Abrir el archivo de empleados para lectura
-    file.open("Empleados.txt", ios::in);
+    file.open("Empleados.bin", ios::in);
     if (!file.is_open())
     {
         cout << "\n\t\t\tNo hay información o no se pudo abrir el archivo..." << endl;
@@ -249,7 +262,7 @@ void Empleados::borrarEmpleados()
     getline(cin, CambioNombreBorrar); // Leer nombre completo con espacios
 
     // Abrir archivo temporal donde se guardarán los empleados no eliminados
-    file1.open("Record.txt", ios::out);
+    file1.open("Record.bin", ios::out);
     if (!file1.is_open())
     {
         cout << "\n\t\t\tError al crear archivo temporal." << endl;
@@ -293,11 +306,11 @@ void Empleados::borrarEmpleados()
     if (found == 0)
     {
         cout << "\n\t\t\tEmpleado no encontrado..." << endl;
-        remove("Record.txt"); // Eliminar archivo temporal si no hubo coincidencias
+        remove("Record.bin"); // Eliminar archivo temporal si no hubo coincidencias
     }
     else
     {
-        remove("Empleados.txt");              // Borrar archivo original
-        rename("Record.txt", "Empleados.txt"); // Renombrar archivo temporal como definitivo
+        remove("Empleados.bin");              // Borrar archivo original
+        rename("Record.bin", "Empleados.bin"); // Renombrar archivo temporal como definitivo
     }
 }

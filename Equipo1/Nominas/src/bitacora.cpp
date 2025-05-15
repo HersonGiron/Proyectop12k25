@@ -63,11 +63,11 @@ void bitacora::menu()
     } while (choice != 3); // Repite hasta que el usuario elija salir
 }
 
-// Agrega un nuevo registro al archivo bitacora.txt
+// Agrega un nuevo registro al archivo bitacora.bin
 void bitacora::insertar(string nombre, string aplicacion, string accion)
 {
     system("cls"); // Limpia la pantalla
-    fstream file("bitacora.txt", ios::app | ios::out); // Abre archivo para agregar contenido
+    fstream file("bitacora.bin", ios::app | ios::out); // Abre archivo para agregar contenido
 
     // Obtiene la fecha y hora actual
     time_t now = time(0);
@@ -87,11 +87,11 @@ void bitacora::insertar(string nombre, string aplicacion, string accion)
     system("pause"); // Pausa para que el usuario vea el mensaje
 }
 
-// Muestra los registros almacenados en bitacora.txt
+// Muestra los registros almacenados en bitacora.bin
 void bitacora::desplegar()
 {
     system("cls"); // Limpia pantalla
-    fstream file("bitacora.txt", ios::in); // Abre el archivo para lectura
+    fstream file("bitacora.bin", ios::in); // Abre el archivo para lectura
     int total = 0;
     string nombre, aplicacion, accion, timestamp;
 
