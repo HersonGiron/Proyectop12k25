@@ -86,9 +86,10 @@ void sistema::ingresarUsuario() {
 
             // Compara los datos ingresados con los del archivo
             if (usuario == nombre && contraseniaArchivo == contrasenia) {
+                usuarioActual = nombre;
                 cout << "Ingreso exitoso." << endl;
                 archivo.close();      // Cierra el archivo
-                opcion.menu();        // Llama al menú principal del sistema
+                opcion.menu(usuarioActual);        // Llama al menú principal del sistema
                 return;               // Sale de la función
             }
         }

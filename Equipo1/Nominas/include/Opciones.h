@@ -9,7 +9,7 @@ class Opciones//Clase la cual muestra el menu-HERSON GIRON
     private:
 		string id, nombre, estatus;
 	public:
-		void menu();
+		void menu(string usuario);
     protected:
 
     private:
